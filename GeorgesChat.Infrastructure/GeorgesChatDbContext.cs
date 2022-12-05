@@ -18,7 +18,7 @@ public class GeorgesChatDbContext : IdentityDbContext<User>
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=.;Database=GeorgesChat;Integrated Security=true;encrypt=false;");
+        optionsBuilder.UseSqlServer("Server=.;Database=GeorgesChat;Integrated Security=true;");
         base.OnConfiguring(optionsBuilder);
     }
 

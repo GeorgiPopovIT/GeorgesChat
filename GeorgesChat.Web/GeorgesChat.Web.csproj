@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\GeorgesChat.Core\GeorgesChat.Core.csproj" />
     <ProjectReference Include="..\GeorgesChat.Infrastructure\GeorgesChat.Infrastructure.csproj" />
   </ItemGroup>
 

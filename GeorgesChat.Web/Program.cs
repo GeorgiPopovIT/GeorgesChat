@@ -1,9 +1,10 @@
+using GeorgesChat.Core;
 using GeorgesChat.Infrastructure;
 using GeorgesChat.Infrastructure.Data;
 using GeorgesChat.Web.Hubs;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
-
+using Microsoft.EntityFrameworkCore;
+    
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -13,10 +14,13 @@ builder.Services.AddDbContext<GeorgesChatDbContext>(options =>
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = false)
+     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<GeorgesChatDbContext>();
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddSignalR();
+
+builder.Services.AddTransient<IUserService,UserService>();
 
 
 var app = builder.Build();

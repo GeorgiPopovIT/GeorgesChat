@@ -8,7 +8,7 @@ document.getElementById("sendButton").disabled = true;
 connection.on("ReceiveMessage", function (user, message) {
     //var li = document.createElement("li");
     //document.getElementById("messagesList").appendChild(li);
-
+    if (document.getElementByIddocument.getElementById('messagesList'))
     document.getElementById('messagesList').innerHTML += ` <li class="clearfix">
                                 <div class="message-data" style="text-align: right">
                                     <span class="message-data-time">10:10 AM, Today</span>

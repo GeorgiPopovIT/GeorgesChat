@@ -1,9 +1,10 @@
 ﻿using GeorgesChat.Infrastructure.Data;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace GeorgesChat.Infrastructure;
 
-public class GeorgesChatDbContext : DbContext
+public class GeorgesChatDbContext : IdentityDbContext<User>
 {
 	public GeorgesChatDbContext()
 	{}
@@ -17,7 +18,7 @@ public class GeorgesChatDbContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=.;Database=GeorgesChat;Integrated Security=true;");
+        optionsBuilder.UseSqlServer("Server=.;Database=GeorgesChat;Integrated Security=true;encrypt=false;");
         base.OnConfiguring(optionsBuilder);
     }
 

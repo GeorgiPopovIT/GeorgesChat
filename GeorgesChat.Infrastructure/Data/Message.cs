@@ -1,16 +1,20 @@
-﻿using System;
-
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace GeorgesChat.Infrastructure.Data
 {
     public class Message : BaseModel<int>
     {
+        [Required]
         public string? MessageBody { get; set; }
 
-        public int SenderId { get; set; }
+        public string SenderId { get; set; }
+        public User User { get; set; }
 
-        public bool IsSeen { get; set; }
+        public int GroupId { get; set; }
+        public Group Group { get; set; }
 
-        public int ConversationId { get; set; }
+
+        public string ChannelId { get; set; }
+
     }
 }

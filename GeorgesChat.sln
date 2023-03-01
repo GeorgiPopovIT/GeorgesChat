@@ -10,7 +10,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeorgesChat.Core", "Georges
 		{FE922336-3BE6-4849-A5AC-2870DAAFEC24} = {FE922336-3BE6-4849-A5AC-2870DAAFEC24}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeorgesChat.Web", "GeorgesChat.Web\GeorgesChat.Web.csproj", "{D768EF33-D419-4B33-8F27-283E4EFB4FC3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeorgesChat.Web", "GeorgesChat.Web\GeorgesChat.Web.csproj", "{B3168CFD-00D8-449A-B55A-15F27F9245CE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,10 +26,10 @@ Global
 		{EC2A7C7C-D010-49F0-A8C0-491631052A41}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EC2A7C7C-D010-49F0-A8C0-491631052A41}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EC2A7C7C-D010-49F0-A8C0-491631052A41}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D768EF33-D419-4B33-8F27-283E4EFB4FC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D768EF33-D419-4B33-8F27-283E4EFB4FC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D768EF33-D419-4B33-8F27-283E4EFB4FC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D768EF33-D419-4B33-8F27-283E4EFB4FC3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3168CFD-00D8-449A-B55A-15F27F9245CE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3168CFD-00D8-449A-B55A-15F27F9245CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3168CFD-00D8-449A-B55A-15F27F9245CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3168CFD-00D8-449A-B55A-15F27F9245CE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -4,7 +4,7 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>aspnet-GeorgesChat.Web-18c185f9-8ae7-4887-9fb7-5300a7715bec</UserSecretsId>
+    <UserSecretsId>aspnet-GeorgesChat.Web-df0d91b7-2676-4289-afe0-3011f564eb16</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 

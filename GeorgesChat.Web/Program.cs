@@ -1,7 +1,7 @@
 using GeorgesChat.Infrastructure;
-using GeorgesChat.Web.Hubs;
-using Microsoft.AspNetCore.Identity;
+using GeorgesChat.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,10 +11,9 @@ builder.Services.AddDbContext<GeorgesChatDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<GeorgesChatDbContext>();
-builder.Services.AddRazorPages();
-builder.Services.AddSignalR();
+builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
 
@@ -25,7 +24,7 @@ if (app.Environment.IsDevelopment())
 }
 else
 {
-    app.UseExceptionHandler("/Error");
+    app.UseExceptionHandler("/Home/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
@@ -37,7 +36,9 @@ app.UseRouting();
 
 app.UseAuthorization();
 
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
-app.MapHub<ChatHub>("/chatHub");
 
 app.Run();

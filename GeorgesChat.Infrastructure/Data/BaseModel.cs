@@ -1,18 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace GeorgesChat.Infrastructure.Data
+namespace GeorgesChat.Infrastructure.Data;
+
+public abstract class BaseModel<TKey>
 {
-    public class BaseModel<TKey>
-    {
-        [Key]
-        public TKey? Id { get; set; }
+    [Key]
+    public TKey? Id { get; set; }
 
-        public DateTime CreatedOn { get; set; }
+    public DateTime CreatedOn { get; private set; } = DateTime.UtcNow;
 
-        public DateTime? ModifiedOn { get; set; }
+    public DateTime? ModifiedOn { get; set; }
 
-        public DateTime? DeletedOn { get; set; }
+    public DateTime? DeletedOn { get; set; }
 
-        public bool IsDeleted { get; set; }
-    }
+    public bool IsDeleted { get; set; }
 }

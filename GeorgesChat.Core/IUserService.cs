@@ -1,6 +1,8 @@
-﻿namespace GeorgesChat.Core;
+﻿using GeorgesChat.Core.Models;
 
-public class IUserService
+namespace GeorgesChat.Core;
+
+public interface IUserService
 {
-
+	LisitngConenctedUsers GetUsers();
 }

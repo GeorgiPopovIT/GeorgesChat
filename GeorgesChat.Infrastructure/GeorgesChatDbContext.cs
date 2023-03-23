@@ -12,9 +12,9 @@ public class GeorgesChatDbContext : IdentityDbContext<User>
 	public GeorgesChatDbContext(DbContextOptions<GeorgesChatDbContext> options)
 		:base(options) { }
 
-    public DbSet<Message> Messages { get; set; }
+    public DbSet<Message> Messages => Set<Message>();
 
-    public DbSet<Group> Groups { get; set; }
+    public DbSet<Group> Groups => Set<Group>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

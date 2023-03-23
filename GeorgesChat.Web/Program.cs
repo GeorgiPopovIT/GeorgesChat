@@ -1,7 +1,8 @@
+using GeorgesChat.Core;
 using GeorgesChat.Infrastructure;
 using GeorgesChat.Infrastructure.Data;
+using GeorgesChat.Web.Hubs;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,9 +12,20 @@ builder.Services.AddDbContext<GeorgesChatDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-builder.Services.AddDefaultIdentity<User>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<GeorgesChatDbContext>();
+builder.Services.AddDefaultIdentity<User>(options =>
+{
+	options.Password.RequireDigit = false;
+	options.Password.RequireLowercase = false;
+	options.Password.RequireNonAlphanumeric = false;
+	options.Password.RequireUppercase = false;
+	options.SignIn.RequireConfirmedAccount = false;
+})
+   .AddEntityFrameworkStores<GeorgesChatDbContext>();
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddSignalR();
+
+builder.Services.AddScoped<IUserService,UserService>();
 
 var app = builder.Build();
 
@@ -40,5 +52,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+app.MapHub<ChatHub>("/chatHub");
 
 app.Run();

@@ -8,6 +8,6 @@ public class ChatHub : Hub
     {
         string userId;
 
-        await Clients.User(userId).SendAsync(sender, message, receiver);
+        //await Clients.User(userId).SendAsync(sender, message, receiver);
     }
 }

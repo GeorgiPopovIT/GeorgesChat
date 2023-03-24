@@ -10,9 +10,9 @@ namespace GeorgesChat.Infrastructure.Data
         public string SenderId { get; set; }
         public User User { get; set; }
 
-        public int GroupId { get; set; }
-        public Group Group { get; set; }
+        public int ChatId { get; set; }
 
+        public Chat Chat { get; set; }
 
         public string ChannelId { get; set; }
 

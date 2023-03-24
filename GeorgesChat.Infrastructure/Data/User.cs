@@ -10,4 +10,6 @@ public class User : IdentityUser
 
 
     public ICollection<Message> Messages { get; init; } = new HashSet<Message>();
+
+    public ICollection<Chat> Chats { get; init; } = new HashSet<Chat>();
 }

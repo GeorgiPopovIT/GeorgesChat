@@ -14,11 +14,11 @@ public class GeorgesChatDbContext : IdentityDbContext<User>
 
     public DbSet<Message> Messages => Set<Message>();
 
-    public DbSet<Group> Groups => Set<Group>();
+    public DbSet<Chat> Chats => Set<Chat>();
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer("Server=.;Database=GeorgesChat;Integrated Security=true;");
+        optionsBuilder.UseSqlServer("Server=.;Database=GeorgesChat;Integrated Security=true;TrustServerCertificate=True");
         base.OnConfiguring(optionsBuilder);
     }
 

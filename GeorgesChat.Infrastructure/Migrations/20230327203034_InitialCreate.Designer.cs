@@ -4,6 +4,7 @@ using GeorgesChat.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GeorgesChat.Infrastructure.Migrations
 {
     [DbContext(typeof(GeorgesChatDbContext))]
-    partial class GeorgesChatDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230327203034_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -73,7 +76,7 @@ namespace GeorgesChat.Infrastructure.Migrations
                     b.Property<int>("ChatId")
                         .HasColumnType("int");
 
-                    b.Property<string>("ConnectionId")
+                    b.Property<string>("ConnectionlId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

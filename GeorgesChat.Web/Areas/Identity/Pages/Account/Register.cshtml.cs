@@ -1,7 +1,6 @@
 ﻿#nullable disable
 using System.ComponentModel.DataAnnotations;
 using System.Text;
-using System.Text.Encodings.Web;
 using GeorgesChat.Infrastructure.Data;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
@@ -80,7 +79,7 @@ namespace GeorgesChat.Web.Areas.Identity.Pages.Account
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 5)]
             public string FullName { get; set; }
 
-            [Required]
+            [Required(ErrorMessage ="{0} is required.")]
             [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Password")]
@@ -111,7 +110,7 @@ namespace GeorgesChat.Web.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
+                await _userStore.SetUserNameAsync(user, Input.FullName, CancellationToken.None);
                 //await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -155,7 +154,10 @@ namespace GeorgesChat.Web.Areas.Identity.Pages.Account
         {
             try
             {
-                return Activator.CreateInstance<User>();
+                var user = Activator.CreateInstance<User>();
+                user.FullName = Input.FullName;
+				user.Email = Input.Email;
+				return user;
             }
             catch
             {

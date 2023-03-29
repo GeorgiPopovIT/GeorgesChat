@@ -2,6 +2,7 @@
 using GeorgesChat.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace GeorgesChat.Web.Controllers;
 
@@ -14,11 +15,9 @@ public class HomeController : Controller
 		_userService = userService;
 	}
 
-	public IActionResult Index()
+	public async Task<IActionResult> Index()
     {
-        var connectedUsers = this._userService.GetUsers();
-
-        return View(connectedUsers);
+        return View();
     }
 
     public IActionResult Privacy()

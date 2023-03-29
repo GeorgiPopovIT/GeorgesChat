@@ -1,4 +1,4 @@
-using GeorgesChat.Core;
+using GeorgesChat.Core.Users;
 using GeorgesChat.Infrastructure;
 using GeorgesChat.Infrastructure.Data;
 using GeorgesChat.Web.Hubs;

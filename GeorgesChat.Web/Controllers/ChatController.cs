@@ -8,4 +8,9 @@ public class ChatController : Controller
 	{
 		return View();
 	}
+
+	public IActionResult GetChat(string userId)
+	{
+		return View();
+	}
 }

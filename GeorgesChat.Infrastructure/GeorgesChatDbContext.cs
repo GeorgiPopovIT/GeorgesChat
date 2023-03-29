@@ -12,11 +12,13 @@ public class GeorgesChatDbContext : IdentityDbContext<User>
 	public GeorgesChatDbContext(DbContextOptions<GeorgesChatDbContext> options)
 		:base(options) { }
 
-    public DbSet<Message> Messages => Set<Message>();
+    public DbSet<Message> Messages { get;set; }
 
-    public DbSet<Chat> Chats => Set<Chat>();
+	public DbSet<Chat> Chats { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+
+
+	protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer("Server=.;Database=GeorgesChat;Integrated Security=true;TrustServerCertificate=True");
         base.OnConfiguring(optionsBuilder);

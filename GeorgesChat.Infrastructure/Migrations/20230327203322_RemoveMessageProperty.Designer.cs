@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GeorgesChat.Infrastructure.Migrations
 {
     [DbContext(typeof(GeorgesChatDbContext))]
-    [Migration("20221205121348_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20230327203322_RemoveMessageProperty")]
+    partial class RemoveMessageProperty
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,22 @@ namespace GeorgesChat.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("GeorgesChat.Infrastructure.Data.Group", b =>
+            modelBuilder.Entity("ChatUser", b =>
+                {
+                    b.Property<int>("ChatsId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UsersId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("ChatsId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("ChatUser");
+                });
+
+            modelBuilder.Entity("GeorgesChat.Infrastructure.Data.Chat", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -45,13 +60,9 @@ namespace GeorgesChat.Infrastructure.Migrations
                     b.Property<DateTime?>("ModifiedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
-                    b.ToTable("Groups");
+                    b.ToTable("Chats");
                 });
 
             modelBuilder.Entity("GeorgesChat.Infrastructure.Data.Message", b =>
@@ -62,7 +73,10 @@ namespace GeorgesChat.Infrastructure.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ChannelId")
+                    b.Property<int>("ChatId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConnectionId")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -71,9 +85,6 @@ namespace GeorgesChat.Infrastructure.Migrations
 
                     b.Property<DateTime?>("DeletedOn")
                         .HasColumnType("datetime2");
-
-                    b.Property<int>("GroupId")
-                        .HasColumnType("int");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -87,16 +98,13 @@ namespace GeorgesChat.Infrastructure.Migrations
 
                     b.Property<string>("SenderId")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GroupId");
+                    b.HasIndex("ChatId");
 
-                    b.HasIndex("UserId");
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
                 });
@@ -120,14 +128,7 @@ namespace GeorgesChat.Infrastructure.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int?>("GroupId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("LastName")
+                    b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -165,8 +166,6 @@ namespace GeorgesChat.Infrastructure.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GroupId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -312,28 +311,38 @@ namespace GeorgesChat.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("GeorgesChat.Infrastructure.Data.Message", b =>
+            modelBuilder.Entity("ChatUser", b =>
                 {
-                    b.HasOne("GeorgesChat.Infrastructure.Data.Group", "Group")
-                        .WithMany("Messages")
-                        .HasForeignKey("GroupId")
+                    b.HasOne("GeorgesChat.Infrastructure.Data.Chat", null)
+                        .WithMany()
+                        .HasForeignKey("ChatsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("GeorgesChat.Infrastructure.Data.User", "User")
-                        .WithMany("Messages")
-                        .HasForeignKey("UserId");
-
-                    b.Navigation("Group");
-
-                    b.Navigation("User");
+                    b.HasOne("GeorgesChat.Infrastructure.Data.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
-            modelBuilder.Entity("GeorgesChat.Infrastructure.Data.User", b =>
+            modelBuilder.Entity("GeorgesChat.Infrastructure.Data.Message", b =>
                 {
-                    b.HasOne("GeorgesChat.Infrastructure.Data.Group", null)
-                        .WithMany("Participants")
-                        .HasForeignKey("GroupId");
+                    b.HasOne("GeorgesChat.Infrastructure.Data.Chat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("GeorgesChat.Infrastructure.Data.User", "Sender")
+                        .WithMany("Messages")
+                        .HasForeignKey("SenderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Chat");
+
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -387,11 +396,9 @@ namespace GeorgesChat.Infrastructure.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("GeorgesChat.Infrastructure.Data.Group", b =>
+            modelBuilder.Entity("GeorgesChat.Infrastructure.Data.Chat", b =>
                 {
                     b.Navigation("Messages");
-
-                    b.Navigation("Participants");
                 });
 
             modelBuilder.Entity("GeorgesChat.Infrastructure.Data.User", b =>

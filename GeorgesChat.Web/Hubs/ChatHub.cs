@@ -10,4 +10,6 @@ public class ChatHub : Hub
 
         //await Clients.User(userId).SendAsync(sender, message, receiver);
     }
+
+    public string GetConnectionId() => Context.ConnectionId;
 }

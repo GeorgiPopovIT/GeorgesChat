@@ -1,3 +1,4 @@
+using GeorgesChat.Core.Chats;
 using GeorgesChat.Core.Users;
 using GeorgesChat.Infrastructure;
 using GeorgesChat.Infrastructure.Data;
@@ -25,6 +26,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddSignalR();
 
+builder.Services.AddTransient<IChatService, ChatService>();
 builder.Services.AddScoped<IUserService,UserService>();
 
 var app = builder.Build();

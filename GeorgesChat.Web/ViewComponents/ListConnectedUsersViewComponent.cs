@@ -1,4 +1,4 @@
-﻿using GeorgesChat.Core;
+﻿using GeorgesChat.Core.Users;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewComponents;
 using System.Security.Claims;

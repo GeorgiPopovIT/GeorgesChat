@@ -1,4 +1,4 @@
-﻿using GeorgesChat.Core;
+﻿using GeorgesChat.Core.Users;
 using GeorgesChat.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -8,11 +8,9 @@ namespace GeorgesChat.Web.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly IUserService _userService;
 
-	public HomeController(IUserService userService)
+	public HomeController()
 	{
-		_userService = userService;
 	}
 
 	public async Task<IActionResult> Index()

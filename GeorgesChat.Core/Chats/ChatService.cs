@@ -12,31 +12,19 @@ public class ChatService : IChatService
 		_dbContext = dbContext;
 	}
 
-	public ChatViewModel GetChat(int chatId)
+	public ChatViewModel GetChat(int chatId) => new ChatViewModel
 	{
-		return new ChatViewModel
-		{
-			Messages = this._dbContext.Messages
+		ChatId = chatId,
+		Messages = this._dbContext.Messages
 			.Where(x => x.ChatId == chatId)
 			.Select(m => new MessageViewModel
 			{
-				MessageBody = m.MessageBody
+				MessageBody = m.MessageBody,
+				CreatedOn = m.CreatedOn,
+				UserId = m.SenderId
 			}).ToList()
-		};
-	}
-	public IEnumerable<ChatViewModel> GetChat(string userId)
-	{
-		var result = this._dbContext.Chats
-			.Where(x => x.Users.Any(c => c.Id == userId))
-			.Select(x => new ChatViewModel
-			{
-				Messages = x.Messages.Select(c => new MessageViewModel
-				{
-					MessageBody = c.MessageBody
-				})
-			}).ToList();
-
-		return result;
-	}
+	};
 
 }
+
+

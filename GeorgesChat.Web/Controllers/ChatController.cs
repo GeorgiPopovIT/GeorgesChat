@@ -1,16 +1,27 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GeorgesChat.Core.Chats;
+using GeorgesChat.Core.Models;
+using GeorgesChat.Web.Hubs;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
+using System.Security.Claims;
 
 namespace GeorgesChat.Web.Controllers;
 
 public class ChatController : Controller
 {
-	public IActionResult Index()
+	private IChatService _chatService;
+
+	public ChatController(IChatService chatService)
 	{
-		return View();
+		_chatService = chatService;
 	}
 
-	public IActionResult GetChat(string userId)
+	public IActionResult Index(int chatId = 0)
 	{
-		return View();
+		var chats = this._chatService.GetChat(chatId);
+		chats.SenderId = this.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+		return View(chats);
 	}
 }

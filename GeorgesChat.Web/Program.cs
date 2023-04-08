@@ -1,4 +1,5 @@
 using GeorgesChat.Core.Chats;
+using GeorgesChat.Core.Messages;
 using GeorgesChat.Core.Users;
 using GeorgesChat.Infrastructure;
 using GeorgesChat.Infrastructure.Data;
@@ -28,6 +29,7 @@ builder.Services.AddSignalR();
 
 builder.Services.AddTransient<IChatService, ChatService>();
 builder.Services.AddScoped<IUserService,UserService>();
+builder.Services.AddScoped<IMessageService, MessageService>();
 
 var app = builder.Build();
 

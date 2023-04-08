@@ -1,5 +1,6 @@
 ﻿using GeorgesChat.Core.Models;
 using GeorgesChat.Infrastructure;
+using GeorgesChat.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 using System.Security.Cryptography.X509Certificates;
@@ -15,7 +16,10 @@ public class UserService : IUserService
         _dbContext = dbContext;
     }
 
-    public async Task<ListingConenctedUsers> GetUsersAsync(string currUserId)
+	public async Task<User> GetUserById(string userId)
+        => await this._dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+	public async Task<ListingConenctedUsers> GetUsersAsync(string currUserId)
     {
         return new ListingConenctedUsers
         {

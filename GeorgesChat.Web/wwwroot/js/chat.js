@@ -2,15 +2,30 @@
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
-document.getElementById("sendButton").disabled = true;
+document.getElementById("message").disabled = true;
 
-document.getElementById('sendButon').addEventListener('click', function (event) {
-    var sender = document.getElementById("senderEmail").value;
-    var message = document.getElementById("message").value;
-    var receiver = document.getElementById("receiverEmail").value;
+connection.on("ReceiveMessage", function (message) {
+    var list = document.getElementById('list');
 
-    connectionChat.send("SendMessageToReceiver", sender, receiver, message);
+    list.innerHTML += `<li class="clearfix">
+							<div class="message-data text-right">
+								<span class="message-data-time"></span>
+							</div>
+							<div class="message other-message float-right">${message}</div>
+						</li>`;
+});
+
+document.getElementById('message').addEventListener('click', function (event) {
     event.preventDefault();
+
+    var message = document.getElementById("message").value;
+    var receiver = document.getElementById("receiverId").value;
+    var sender = document.getElementById('senderId').value;
+
+    console.log(`${sender}, ${message}, ${receiver}`);
+
+    connection.invoke("SendMessageToReceiver", sender, message, receiver);
+//    event.preventDefault();
 });
 
 connection.start().then(function () {

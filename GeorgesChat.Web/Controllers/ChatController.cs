@@ -19,9 +19,10 @@ public class ChatController : Controller
 
 	public IActionResult Index(int chatId = 0)
 	{
-		var chats = this._chatService.GetChat(chatId);
-		chats.SenderId = this.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+		var userId = this.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-		return View(chats);
+		var chat = this._chatService.GetChat(chatId);
+		chat.SenderId = userId;
+		return View(chat);
 	}
 }

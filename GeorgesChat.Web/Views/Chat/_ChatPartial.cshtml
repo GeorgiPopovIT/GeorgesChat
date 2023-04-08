@@ -14,7 +14,7 @@ else
 						<img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
 					</a>
 					<div class="chat-about">
-						<h6 class="m-b-0">Aiden Chavez</h6>
+						<h6 id="receiverEmail" class="m-b-0"></h6>
 						<small>Last seen: 2 hours ago</small>
 					</div>
 				</div>
@@ -27,10 +27,10 @@ else
 			</div>
 		</div>
 		<div class="chat-history">
-			<ul class="m-b-0">
+			<ul id="list"class="m-b-0">
 				@foreach (var currMessage in this.Model.Messages)
 				{
-					@if (currMessage.UserId == this.Model.SenderId)
+					@if (currMessage.SenderId == this.Model.SenderId)
 					{
 						<li class="clearfix">
 							<div class="message-data text-right">
@@ -44,9 +44,9 @@ else
 					{
 						<li class="clearfix">
 							<div class="message-data">
-								<span class="message-data-time">10:12 AM, Today</span>
+								<span class="message-data-time">@currMessage.CreatedOn</span>
 							</div>
-							<div class="message my-message">Are we meeting today?</div>
+							<div class="message my-message">@currMessage.MessageBody</div>
 						</li>
 					}
 				}
@@ -57,7 +57,9 @@ else
 				<div class="input-group-prepend">
 					<span class="input-group-text"><i class="fa fa-send"></i></span>
 				</div>
-				<input id="message" type="text" class="form-control" placeholder="Enter text here...">
+				<input type="hidden" id="senderId" value="@Model.SenderId">
+				<input type="hidden" id="receiverId" value="@Model.ReceiverId">
+				<input id="message" type="submit" class="form-control" placeholder="Enter text here...">
 			</div>
 		</div>
 	</div>

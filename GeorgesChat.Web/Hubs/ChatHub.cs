@@ -1,14 +1,21 @@
-﻿using Microsoft.AspNetCore.SignalR;
+﻿using GeorgesChat.Core.Chats;
+using Microsoft.AspNetCore.SignalR;
+using System.Security.Claims;
 
 namespace GeorgesChat.Web.Hubs;
 
 public class ChatHub : Hub
 {
-    public async Task SendMessageToReceiver(string sender, string message, string receiver)
+    private IChatService _chatService;
+	public ChatHub(IChatService chatService)
+	{
+		_chatService = chatService;
+	}
+	public async Task SendMessageToReceiver(string senderId, string message, string receiverId)
     {
-        string userId;
+		await this._chatService.CreateChat(senderId,message, receiverId);
 
-        //await Clients.User(userId).SendAsync(sender, message, receiver);
+		await Clients.User(receiverId).SendAsync("ReceiveMessage", message);
     }
 
     public string GetConnectionId() => Context.ConnectionId;

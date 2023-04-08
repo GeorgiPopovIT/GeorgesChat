@@ -6,5 +6,5 @@ public class MessageViewModel
 
     public DateTime CreatedOn { get; init; }
 
-    public string UserId { get; init; }
+    public string SenderId { get; init; }
 }

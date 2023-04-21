@@ -3,7 +3,7 @@ namespace GeorgesChat.Core.Chats;
 
 public interface IChatService
 {
-	ChatViewModel GetChat(int chatId);
+	ChatViewModel GetChatById(int chatId);
 
 	Task CreateChat(string userId, string senderMessage, string receiverId);
 }

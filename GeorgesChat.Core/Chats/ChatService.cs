@@ -30,7 +30,7 @@ public class ChatService : IChatService
 
 		var messageToAdd = this._messageService.GetMessageById(messageId);
 
-		var currentChat = GetChat(sender, receiver);
+		var currentChat = GetCurrentChat(sender, receiver);
 		//await Task.WhenAll(sender, receiver);
 
 		if (currentChat is not null)
@@ -58,7 +58,7 @@ public class ChatService : IChatService
 		await this._dbContext.SaveChangesAsync();
 	}
 
-	public ChatViewModel GetChat(int chatId) => new ChatViewModel
+	public ChatViewModel GetChatById(int chatId) => new ChatViewModel
 	{
 		ChatId = chatId,
 		Messages = this._dbContext.Messages
@@ -71,7 +71,7 @@ public class ChatService : IChatService
 			}).ToList()
 	};
 
-	private Chat GetChat(User sender, User receiver)
+	private Chat GetCurrentChat(User sender, User receiver)
 		=> this._dbContext.Chats
 			.FirstOrDefault(u => u.Users.Contains(sender)
 			&& u.Users.Contains(receiver));

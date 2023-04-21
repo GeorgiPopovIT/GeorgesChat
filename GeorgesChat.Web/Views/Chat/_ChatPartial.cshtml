@@ -6,6 +6,8 @@
 }
 else
 {
+	<input type="hidden" id="senderId" value="@Model.SenderId">
+	<input type="hidden" id="receiverId" value="@Model.ReceiverId">
 	<div class="chat">
 		<div class="chat-header clearfix">
 			<div class="row">
@@ -55,12 +57,14 @@ else
 		<div class="chat-message clearfix">
 			<div class="input-group mb-0">
 				<div class="input-group-prepend">
-					<span class="input-group-text"><i class="fa fa-send"></i></span>
+					<button id="submit" class="input-group-text" disabled><i class="fa fa-send"></i></button>
 				</div>
-				<input type="hidden" id="senderId" value="@Model.SenderId">
-				<input type="hidden" id="receiverId" value="@Model.ReceiverId">
-				<input id="message" type="submit" class="form-control" placeholder="Enter text here...">
+				<input id="messageValue" onkeyup="success()" type="text" class="form-control" placeholder="Enter text here..." />
 			</div>
 		</div>
 	</div>
+}
+
+@section Scripts{
+<script src="~/js/signalr.js"></script>
 }

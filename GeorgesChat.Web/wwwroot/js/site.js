@@ -2,3 +2,11 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+function success() {
+    if (document.getElementById("messageValue").value === "") {
+        document.getElementById('submit').disabled = true;
+    } else {
+        document.getElementById('submit').disabled = false;
+    }
+}

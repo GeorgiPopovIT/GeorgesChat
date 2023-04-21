@@ -21,7 +21,7 @@ public class ChatController : Controller
 	{
 		var userId = this.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-		var chat = this._chatService.GetChat(chatId);
+		var chat = this._chatService.GetChatById(chatId);
 		chat.SenderId = userId;
 		return View(chat);
 	}

@@ -2,12 +2,13 @@
 
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
-//document.getElementById("submit").disabled = true;
 
-connection.on("ReceiveMessage", function (message) {
-    var list = document.getElementById('list');
+connection.on('ReceiveMessage', function (message) {
+    var messageList = document.getElementById('list');
 
-    list.innerHTML += `<li class="clearfix">
+    console.log('ReceiveMessage');
+
+    messageList.innerHTML += `<li class="clearfix">
 							<div class="message-data text-right">
 								<span class="message-data-time"></span>
 							</div>
@@ -15,18 +16,22 @@ connection.on("ReceiveMessage", function (message) {
 						</li>`;
 });
 
-document.getElementById('submit').addEventListener('click', function () {
-    /*event.preventDefault();*/
 
-    console.log('In');
+
+document.getElementById("sendButton").addEventListener("click", function (event) {
+
 
     var message = document.getElementById("messageValue").value;
     var receiver = document.getElementById("receiverId").value;
-    var sender = document.getElementById('senderId').value;
+    var sender = document.getElementById("senderId").value;
 
-    console.log(`${sender}, ${message}, ${receiver}`);
 
-    connection.invoke("SendMessageToReceiver", sender, message, receiver);
+    connection.invoke("SendMessageToReceiver", sender, message, receiver).catch(function (err) {
+        return console.error(err.toString());
+    });
+
+    event.preventDefault();
+
 });
 
 connection.start().then(function () {

@@ -29,7 +29,7 @@ else
 			</div>
 		</div>
 		<div class="chat-history">
-			<ul id="list"class="m-b-0">
+			<ul id="list" class="m-b-0">
 				@foreach (var currMessage in this.Model.Messages)
 				{
 					@if (currMessage.SenderId == this.Model.SenderId)
@@ -37,8 +37,9 @@ else
 						<li class="clearfix">
 							<div class="message-data text-right">
 								<span class="message-data-time">@currMessage.CreatedOn</span>
-@*								<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
-*@							</div>
+								@*								<img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="avatar">
+					*@
+							</div>
 							<div class="message other-message float-right">@currMessage.MessageBody</div>
 						</li>
 					}
@@ -57,14 +58,10 @@ else
 		<div class="chat-message clearfix">
 			<div class="input-group mb-0">
 				<div class="input-group-prepend">
-					<button id="submit" class="input-group-text" disabled><i class="fa fa-send"></i></button>
+					<button onclick="click()" id="sendButton" class="input-group-text" disabled><i class="fa fa-send"></i></button>
 				</div>
 				<input id="messageValue" onkeyup="success()" type="text" class="form-control" placeholder="Enter text here..." />
 			</div>
 		</div>
 	</div>
-}
-
-@section Scripts{
-<script src="~/js/signalr.js"></script>
 }

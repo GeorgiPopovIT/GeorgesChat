@@ -17,12 +17,11 @@ public class ChatController : Controller
 		_chatService = chatService;
 	}
 
-	public IActionResult Index(int chatId = 0)
+	public IActionResult Index(string? receiverId)
 	{
-		var userId = this.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
+		var senderId = this.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-		var chat = this._chatService.GetChatById(chatId);
-		chat.SenderId = userId;
+		var chat = this._chatService.GetChatByReceiverAndSenderId(senderId, receiverId);
 		return View(chat);
 	}
 }

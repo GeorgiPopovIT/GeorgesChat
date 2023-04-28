@@ -5,8 +5,8 @@
 
 function success() {
     if (document.getElementById("messageValue").value === "") {
-        document.getElementById('submit').disabled = true;
+        document.getElementById('sendButton').disabled = true;
     } else {
-        document.getElementById('submit').disabled = false;
+        document.getElementById('sendButton').disabled = false;
     }
 }

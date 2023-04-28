@@ -57,18 +57,17 @@ public class ChatService : IChatService
 
 		await this._dbContext.SaveChangesAsync();
 	}
-
-	public ChatViewModel GetChatById(int chatId) => new ChatViewModel
+	public ChatViewModel GetChatByReceiverAndSenderId(string senderId, string receiverId) => new ChatViewModel
 	{
-		ChatId = chatId,
-		Messages = this._dbContext.Messages
-			.Where(x => x.ChatId == chatId)
-			.Select(m => new MessageViewModel
-			{
-				MessageBody = m.MessageBody,
-				CreatedOn = m.CreatedOn,
-				SenderId = m.SenderId,
-			}).ToList()
+		SenderId = senderId,
+		ReceiverId = receiverId,
+		Messages = this._dbContext.Messages.Where(m => m.SenderId == senderId || m.SenderId == receiverId)
+		.Select(m => new MessageViewModel
+		{
+			MessageBody = m.MessageBody,
+			CreatedOn = m.CreatedOn,
+			SenderId = m.SenderId,
+		}).ToList()
 	};
 
 	private Chat GetCurrentChat(User sender, User receiver)

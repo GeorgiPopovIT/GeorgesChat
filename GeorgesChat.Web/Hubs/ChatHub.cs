@@ -15,7 +15,10 @@ public class ChatHub : Hub
 	{
 		//await this._chatService.CreateChat(senderId,message, receiverId);
 
-		await Clients.User(senderId).SendAsync("ReceiveMessage", message);
+		await Clients.User(receiverId).SendAsync("ReceiveMessage", message);
+
+		await Clients.User(senderId).SendAsync("ReceiveMessageSender", message);
+
 	}
 
 	public string GetConnectionId() => Context.ConnectionId;

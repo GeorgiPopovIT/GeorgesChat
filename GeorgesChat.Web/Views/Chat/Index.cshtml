@@ -14,7 +14,10 @@
 					</div>
 					@await Component.InvokeAsync("ListUsers")
 				</div>
+				@if (Model.ReceiverId is not null)
+				{
 					<partial name="_ChatPartial" model="Model" />
+				}
 			</div>
 		</div>
 	</div>

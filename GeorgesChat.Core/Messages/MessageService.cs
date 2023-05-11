@@ -12,7 +12,7 @@ public class MessageService : IMessageService
 		_dbContext = dbContext;
 	}
 
-	public async Task<int> CreateMessage(string senderId, string message)
+	public Message CreateMessage(string senderId, string message)
 	{
 		var newMessage = new Message
 		{
@@ -20,10 +20,10 @@ public class MessageService : IMessageService
 			SenderId = senderId,
 		};
 
-		await this._dbContext.Messages.AddAsync(newMessage);
-		await this._dbContext.SaveChangesAsync();
+		 //this._dbContext.Messages.Add(newMessage);
+		 //this._dbContext.SaveChanges();
 
-		return newMessage.Id;
+		return newMessage;
 	}
 
 	public Message GetMessageById(int id)

@@ -7,5 +7,11 @@ public interface IUserService
 {
     Task<ListingConenctedUsers> GetUsersAsync(string userId);
 
-    Task<User> GetUserById(string userId);
+	User GetUserById(string userId);
+
+    void ConnectUserById(string userId);
+
+	IEnumerable<string> GetAllConnectedUsers();
+
+	void DisconnectUserById(string userId);
 }

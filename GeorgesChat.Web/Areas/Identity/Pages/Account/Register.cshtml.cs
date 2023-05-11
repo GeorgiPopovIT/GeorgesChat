@@ -156,6 +156,7 @@ namespace GeorgesChat.Web.Areas.Identity.Pages.Account
             {
                 var user = Activator.CreateInstance<User>();
                 user.FullName = Input.FullName;
+                user.UserName = Input.Email;
 				user.Email = Input.Email;
 				return user;
             }

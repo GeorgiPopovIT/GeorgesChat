@@ -1,6 +1,6 @@
 ﻿@model ListingConenctedUsers
 
-<ul class="list-unstyled chat-list mt-2 mb-0">
+<ul id="userList" class="list-unstyled chat-list mt-2 mb-0">
 	@if (Model.Users.Any())
 	{
 		@foreach (var currUser in Model.Users)
@@ -9,7 +9,16 @@
 				<img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
 				<a class="about" asp-controller="Chat" asp-action="Index" asp-route-receiverId="@currUser.Id">
 					<div class="name">@currUser.FullName</div>
-					<div class="status"> <i class="fa fa-circle online"></i> online </div>
+					<div class="status">
+						@if (currUser.IsOnline)
+						{
+							<i class="fa fa-circle online"> online</i>
+						}
+						else
+						{
+							<i class="fa fa-circle offline"> offline</i>
+						}
+					</div>
 				</a>
 			</li>
 		}

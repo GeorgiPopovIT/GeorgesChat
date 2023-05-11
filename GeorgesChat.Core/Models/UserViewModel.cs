@@ -7,6 +7,8 @@ public class UserViewModel
 
 	public string? Email { get; init; }
 
+    public  bool IsOnline { get; init; }
+
     public int? ChatId { get; init; }
 
 }

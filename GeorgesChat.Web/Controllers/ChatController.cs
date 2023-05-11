@@ -17,6 +17,7 @@ public class ChatController : Controller
 		_chatService = chatService;
 	}
 
+	[HttpGet]
 	public IActionResult Index(string? receiverId)
 	{
 		var senderId = this.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);

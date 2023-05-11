@@ -10,8 +10,8 @@ public class ChatService : IChatService
 {
 	private readonly GeorgesChatDbContext _dbContext;
 
-	private IUserService _userService;
-	private IMessageService _messageService;
+	private readonly IUserService _userService;
+	private readonly IMessageService _messageService;
 
 	public ChatService(GeorgesChatDbContext dbContext,
 		IUserService userService, IMessageService messageService)
@@ -23,39 +23,24 @@ public class ChatService : IChatService
 
 	public async Task CreateChat(string senderId, string senderMessage, string receiverId)
 	{
-		var sender = await this._userService.GetUserById(senderId);
-		var receiver = await this._userService.GetUserById(receiverId);
+		var sender =  this._userService.GetUserById(senderId);
+		var receiver =  this._userService.GetUserById(receiverId);
 
-		var messageId = await this._messageService.CreateMessage(senderId, senderMessage);
+		var messageToAdd = this._messageService.CreateMessage(senderId, senderMessage);
 
-		var messageToAdd = this._messageService.GetMessageById(messageId);
+		var chat = this.GetCurrentChat(sender, receiver);
 
-		var currentChat = GetCurrentChat(sender, receiver);
-		//await Task.WhenAll(sender, receiver);
-
-		if (currentChat is not null)
+		if (chat is null)
 		{
-			currentChat.Messages.Add(messageToAdd);
+			chat = new Chat();
 		}
-		else
-		{
-			currentChat = new Chat
-			{
-				Users = new List<User>()
-				{
-					sender, receiver
-				},
-				Messages = new List<Message>()
-				{
-					messageToAdd
-				}
-			};
+		chat.Users.Add(sender);
+		chat.Users.Add(receiver);
+		chat.Messages.Add(messageToAdd);
 
+		this._dbContext.Chats.Add(chat);
 
-		}
-		await this._dbContext.Chats.AddAsync(currentChat);
-
-		await this._dbContext.SaveChangesAsync();
+		this._dbContext.SaveChanges();
 	}
 	public ChatViewModel GetChatByReceiverAndSenderId(string senderId, string receiverId) => new ChatViewModel
 	{

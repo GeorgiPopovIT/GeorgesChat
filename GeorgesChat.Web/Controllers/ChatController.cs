@@ -21,20 +21,7 @@ public class ChatController : Controller
 	{
 		var senderId = this.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-		if (id != null)
-		{
-			var options = new CookieOptions
-			{
-				Expires = DateTimeOffset.Now.AddMinutes(1)
-
-			};
-
-			Response.Cookies.Append("lastUser", id, options);
-		}
-		else
-		{
-			id = Request.Cookies["lastUser"];
-		}
+		
 		var chat = this._chatService.GetChatByReceiverAndSenderId(senderId, id);
 		return View(chat);
 	}

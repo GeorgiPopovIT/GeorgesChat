@@ -45,7 +45,7 @@ public class ChatHub : Hub
 	}
 	public async Task SendMessageToReceiver(string senderId, string message, string receiverId)
 	{
-		//this._chatService.CreateChat(senderId, message, receiverId);
+		await this._chatService.CreateChat(senderId, message, receiverId);
 		await Clients.User(receiverId).SendAsync("ReceiveMessage", message);
 
 		await Clients.User(senderId).SendAsync("ReceiveMessageSender", message);

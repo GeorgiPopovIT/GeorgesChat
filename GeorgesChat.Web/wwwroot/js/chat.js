@@ -3,7 +3,7 @@
 var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
 connection.on("OnlineUsers", function () {
-    alert('User is online.');
+   // alert('User is online.');
 });
 
 connection.on('ReceiveMessage', function (message) {

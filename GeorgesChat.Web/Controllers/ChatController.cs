@@ -3,7 +3,6 @@ using GeorgesChat.Core.Models;
 using GeorgesChat.Web.Hubs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 using System.Security.Claims;
 
 namespace GeorgesChat.Web.Controllers;
@@ -18,11 +17,27 @@ public class ChatController : Controller
 	}
 
 	[HttpGet]
-	public IActionResult Index(string? receiverId)
+	public IActionResult Index(string? id)
 	{
 		var senderId = this.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-		var chat = this._chatService.GetChatByReceiverAndSenderId(senderId, receiverId);
+		if (id != null)
+		{
+			var options = new CookieOptions
+			{
+				Expires = DateTimeOffset.Now.AddMinutes(1)
+
+			};
+
+			Response.Cookies.Append("lastUser", id, options);
+		}
+		else
+		{
+			id = Request.Cookies["lastUser"];
+		}
+		var chat = this._chatService.GetChatByReceiverAndSenderId(senderId, id);
 		return View(chat);
 	}
+
+	
 }

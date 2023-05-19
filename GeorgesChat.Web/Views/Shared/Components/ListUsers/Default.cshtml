@@ -7,7 +7,7 @@
 		{
 			<li class="clearfix active">
 				<img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar">
-				<a class="about" asp-controller="Chat" asp-action="Index" asp-route-receiverId="@currUser.Id">
+				<a class="about" asp-controller="Chat" asp-action="Index" asp-route-id="@currUser.Id">
 					<div class="name">@currUser.FullName</div>
 					<div class="status">
 						@if (currUser.IsOnline)

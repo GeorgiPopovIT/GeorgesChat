@@ -1,7 +1,4 @@
 ﻿using GeorgesChat.Core.Chats;
-using GeorgesChat.Core.Models;
-using GeorgesChat.Web.Hubs;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 

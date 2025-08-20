@@ -15,7 +15,7 @@ public class ChatHub : Hub
 		_userService = userService;
 	}
 
-	public override Task OnConnectedAsync()
+	public override async Task OnConnectedAsync()
 	{
 		var userId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -23,14 +23,14 @@ public class ChatHub : Hub
 		{
 			this._userService.ConnectUserById(userId);
 
-			Clients.Users(this._userService.GetAllConnectedUsers()).SendAsync("OnlineUsers");
+			Clients.Users(await this._userService.GetAllConnectedUsers()).SendAsync("OnlineUsers");
 
 		}
 
-		return base.OnConnectedAsync();
+		await base.OnConnectedAsync();
 	}
 
-	public override Task OnDisconnectedAsync(Exception? exception)
+	public override async Task OnDisconnectedAsync(Exception? exception)
 	{
 		var userId = Context.User.FindFirstValue(ClaimTypes.NameIdentifier);
 
@@ -38,10 +38,10 @@ public class ChatHub : Hub
 		{
 			this._userService.DisconnectUserById(userId);
 
-			Clients.Users(this._userService.GetAllConnectedUsers()).SendAsync("OnlineUsers");
+			Clients.Users(await this._userService.GetAllConnectedUsers()).SendAsync("OnlineUsers");
 
 		}
-		return base.OnDisconnectedAsync(exception);
+		await base.OnDisconnectedAsync(exception);
 	}
 	public async Task SendMessageToReceiver(string senderId, string message, string receiverId)
 	{

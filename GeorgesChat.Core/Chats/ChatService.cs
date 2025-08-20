@@ -3,6 +3,7 @@ using GeorgesChat.Core.Models;
 using GeorgesChat.Core.Users;
 using GeorgesChat.Infrastructure;
 using GeorgesChat.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace GeorgesChat.Core.Chats;
 
@@ -26,9 +27,9 @@ public class ChatService : IChatService
 		var sender =  this._userService.GetUserById(senderId);
 		var receiver =  this._userService.GetUserById(receiverId);
 
-		var messageToAdd = this._messageService.CreateMessage(senderId, senderMessage);
+		var messageToAdd = await this._messageService.CreateMessage(senderId, senderMessage);
 
-		var chat = this.GetCurrentChat(sender, receiver);
+		var chat = await this.GetCurrentChat(sender, receiver);
 
 		if (chat is null)
 		{
@@ -38,9 +39,9 @@ public class ChatService : IChatService
 		chat.Users.Add(receiver);
 		chat.Messages.Add(messageToAdd);
 
-		this._dbContext.Chats.Add(chat);
+		await this._dbContext.Chats.AddAsync(chat);
 
-		this._dbContext.SaveChanges();
+		await this._dbContext.SaveChangesAsync();
 	}
 	public ChatViewModel GetChatByReceiverAndSenderId(string senderId, string receiverId) => new ChatViewModel
 	{
@@ -55,9 +56,9 @@ public class ChatService : IChatService
 		}).ToList()
 	};
 
-	private Chat GetCurrentChat(User sender, User receiver)
-		=> this._dbContext.Chats
-			.FirstOrDefault(u => u.Users.Contains(sender)
+	private async Task<Chat> GetCurrentChat(User sender, User receiver)
+		=> await this._dbContext.Chats
+			.FirstOrDefaultAsync(u => u.Users.Contains(sender)
 			&& u.Users.Contains(receiver));
 
 

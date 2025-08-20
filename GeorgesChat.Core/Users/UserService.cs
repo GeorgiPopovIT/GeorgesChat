@@ -5,38 +5,34 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GeorgesChat.Core.Users;
 
-public class UserService : IUserService
+public class UserService(GeorgesChatDbContext dbContext) : IUserService
 {
-	private readonly GeorgesChatDbContext _dbContext;
+	private readonly GeorgesChatDbContext _dbContext = dbContext;
 
-	public UserService(GeorgesChatDbContext dbContext)
+	public async Task ConnectUserById(string userId)
 	{
-		_dbContext = dbContext;
-	}
-
-	public void ConnectUserById(string userId)
-	{
-		var user = this.GetUserById(userId);
+		var user = await this.GetUserById(userId);
 		user.IsOnline = true;
 
 		this._dbContext.SaveChanges();
 	}
 
-	public void DisconnectUserById(string userId)
+	public async Task DisconnectUserById(string userId)
 	{
-		var user = this.GetUserById(userId);
+		var user = await this.GetUserById(userId);
 		user.IsOnline = false;
 
 		this._dbContext.SaveChanges();
 	}
 
-	public IEnumerable<string> GetAllConnectedUsers()
-		=> this._dbContext.Users
+	public async Task<IEnumerable<string>> GetAllConnectedUsers()
+		=> await this._dbContext.Users
 		.Where(u => u.IsOnline == true)
-		.Select(u => u.Id).ToList();
+		.Select(u => u.Id)
+		.ToListAsync();
 
-	public User GetUserById(string userId)
-		=>  this._dbContext.Users.FirstOrDefault(u => u.Id == userId);
+	public async Task<User> GetUserById(string userId)
+		=> await this._dbContext.Users.FirstOrDefaultAsync(u => u.Id == userId);
 
 	public async Task<ListingConenctedUsers> GetUsersAsync(string currUserId)
 	{

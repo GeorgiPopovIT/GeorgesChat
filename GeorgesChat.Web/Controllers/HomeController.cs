@@ -1,8 +1,6 @@
-﻿using GeorgesChat.Core.Users;
-using GeorgesChat.Web.Models;
+﻿using GeorgesChat.Web.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
-using System.Security.Claims;
 
 namespace GeorgesChat.Web.Controllers;
 

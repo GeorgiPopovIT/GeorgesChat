@@ -1,5 +1,6 @@
 ﻿using GeorgesChat.Infrastructure;
 using GeorgesChat.Infrastructure.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace GeorgesChat.Core.Messages;
 
@@ -12,7 +13,7 @@ public class MessageService : IMessageService
 		_dbContext = dbContext;
 	}
 
-	public Message CreateMessage(string senderId, string message)
+	public async Task<Message> CreateMessage(string senderId, string message)
 	{
 		var newMessage = new Message
 		{
@@ -20,13 +21,13 @@ public class MessageService : IMessageService
 			SenderId = senderId,
 		};
 
-		 //this._dbContext.Messages.Add(newMessage);
-		 //this._dbContext.SaveChanges();
+		await this._dbContext.Messages.AddAsync(newMessage);
+		await this._dbContext.SaveChangesAsync();
 
 		return newMessage;
 	}
 
-	public Message GetMessageById(int id)
-		=> this._dbContext.Messages.FirstOrDefault(m => m.Id == id);
+	public async Task<Message> GetMessageById(int id)
+		=> await this._dbContext.Messages.FirstOrDefaultAsync(m => m.Id == id);
 
 }

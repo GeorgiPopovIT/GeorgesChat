@@ -4,6 +4,6 @@ namespace GeorgesChat.Core.Messages;
 
 public interface IMessageService
 {
-	Message GetMessageById(int id);
-	Message CreateMessage(string senderId, string message);
+	Task<Message> GetMessageById(int id);
+	Task<Message> CreateMessage(string senderId, string message);
 }

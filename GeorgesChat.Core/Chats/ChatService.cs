@@ -24,8 +24,8 @@ public class ChatService : IChatService
 
 	public async Task CreateChat(string senderId, string senderMessage, string receiverId)
 	{
-		var sender =  this._userService.GetUserById(senderId);
-		var receiver =  this._userService.GetUserById(receiverId);
+		var sender =  await this._userService.GetUserById(senderId);
+		var receiver =  await this._userService.GetUserById(receiverId);
 
 		var messageToAdd = await this._messageService.CreateMessage(senderId, senderMessage);
 
